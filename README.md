@@ -101,7 +101,7 @@ To run the project locally, follow these steps:
     - `requirements.txt`
 
 ## Contributing
-Contributions are welcome! Please follow these steps to contribute:
+While Learning Log is a modest project, I am very much open to contributions! If you'd like to contribute, here's how:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature-branch`).
@@ -114,6 +114,6 @@ Contributions are welcome! Please follow these steps to contribute:
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
-- **Eric Matthes**: Whose project in "Python Crash Course" served as the inspiration for this game.
+- **Eric Matthes**: Whose project in "Python Crash Course" served as the inspiration for this small web application.
 - **Cursor.ai and Claude 3.5 Sonnet**: For assistance in refactoring, commenting the code, and writing this beautiful README.md!
 - **DALLE-3**: For the logo.
