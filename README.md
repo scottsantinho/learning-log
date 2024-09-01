@@ -1,5 +1,8 @@
 # Learning Log
 
+![Screenshot 2024-09-01 at 2 27 23 PM](https://github.com/user-attachments/assets/32c66eea-1ef4-494b-a792-cb79e5af5851)
+
+
 ## Table of Contents
 - [Description](#description)
 - [Getting Started](#getting-started)
