@@ -1,0 +1,52 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="jumbotron bg-white p-5 rounded shadow-lg">
+        <h1 class="display-4 text-dark">Welcome to Learning Log!</h1>
+        <p class="lead">Track your learning journey and watch your knowledge grow.</p>
+        <hr class="my-4">
+        <p>Start by adding new topics and then creating entries for each topic.</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'learning_logs:topics' %}" role="button">Explore Topics</a>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card bg-light text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Track Progress</h5>
+                    <p class="card-text">Monitor your learning journey with ease.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-light text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Organize Thoughts</h5>
+                    <p class="card-text">Keep your ideas structured and accessible.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-light text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Reflect & Grow</h5>
+                    <p class="card-text">Review your progress and set new goals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="attribution-wrapper">
+                <p class="attribution-text text-muted">Made by Scott Santinho</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+

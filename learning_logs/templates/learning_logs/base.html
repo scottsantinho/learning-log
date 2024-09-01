@@ -1,0 +1,137 @@
+{% load django_bootstrap5 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Log</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+        }
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        .navbar .navbar-brand {
+            color: #333;
+            transition: color 0.3s ease;
+        }
+        .navbar .navbar-brand:hover {
+            color: #000;
+        }
+        .navbar .navbar-nav .nav-link {
+            color: #333;
+            transition: color 0.3s ease;
+        }
+        .navbar .navbar-nav .nav-link:hover {
+            color: #000;
+        }
+        .navbar-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+        .navbar .brand-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000; /* Black color for the text */
+            margin-left: 15px;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .btn-primary {
+            background-color: #333;
+            border-color: #333;
+        }
+        .btn-primary:hover {
+            background-color: #000;
+            border-color: #000;
+        }
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'learning_logs:index' %}">
+                <img src="{% static 'learning_logs/assets/logo_learning_log.png' %}" alt="Learning Log Logo" class="navbar-logo me-2">
+                <span class="brand-text">Learning Log</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'learning_logs:topics' %}">
+                            <i class="fas fa-list me-1"></i>Topics
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user me-1"></i>{{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="fas fa-sign-out-alt me-1"></i>Log out
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:register' %}">
+                                <i class="fas fa-user-plus me-1"></i>Register
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:login' %}">
+                                <i class="fas fa-sign-in-alt me-1"></i>Log in
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        {% bootstrap_messages %}
+        {% block content %}{% endblock content %}
+    </main>
+</body>
+</html>
+<style>
+    .navbar-brand img {
+        transition: transform 0.3s ease;
+    }
+    .navbar-brand:hover img {
+        transform: rotate(10deg);
+    }
+    .brand-text {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: white;
+        margin-left: 10px;
+    }
+</style>
+
