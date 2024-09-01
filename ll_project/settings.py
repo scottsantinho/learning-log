@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+# Import the Path class from the pathlib module
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR is the base directory of the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -20,23 +22,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY is used for cryptographic signing
 SECRET_KEY = 'django-insecure-)gqk412b0=8=wv2x@k$_0n(^+!9vqli1)0#*2_v$h@svh8p&ca'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG mode should be False in production
 DEBUG = True
 
+# ALLOWED_HOSTS is a list of strings representing the host/domain names that this Django site can serve
 ALLOWED_HOSTS = []
 
 
 # Application definition
 
+# INSTALLED_APPS is a list of strings designating all applications that are enabled in this Django installation
 INSTALLED_APPS = [    
-    #Local apps
+    # Local apps
     'learning_logs',
     'accounts',
-    #Third-party apps
+    # Third-party apps
     'django_bootstrap5',
-    #Django apps
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles'
 ]
 
+# MIDDLEWARE is a list of middleware to use
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -55,14 +62,21 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# ROOT_URLCONF is a string representing the full Python import path to the root URLconf
 ROOT_URLCONF = 'll_project.urls'
 
+# TEMPLATES is a list containing the settings for all template engines to be used with Django
 TEMPLATES = [
     {
+        # BACKEND is the dotted path to the template engine class
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # DIRS is a list of directories where the engine should look for template source files
         'DIRS': [BASE_DIR / 'templates'],
+        # APP_DIRS tells whether the engine should look for templates inside installed applications
         'APP_DIRS': True,
+        # OPTIONS is a dictionary of options to be passed to the template engine
         'OPTIONS': {
+            # context_processors is a list of callables that add variables to the template context
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -73,15 +87,19 @@ TEMPLATES = [
     },
 ]
 
+# WSGI_APPLICATION is a string representing the full Python import path to the WSGI application
 WSGI_APPLICATION = 'll_project.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES is a dictionary containing the settings for all databases to be used with Django
 DATABASES = {
     'default': {
+        # ENGINE is the backend to use for the database
         'ENGINE': 'django.db.backends.sqlite3',
+        # NAME is the name of the database
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
@@ -90,17 +108,22 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
+# AUTH_PASSWORD_VALIDATORS is a list of validators that are used to check the strength of user passwords
 AUTH_PASSWORD_VALIDATORS = [
     {
+        # UserAttributeSimilarityValidator checks that the password is not too similar to the user's other attributes
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
+        # MinimumLengthValidator checks that the password is at least a certain length
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
+        # CommonPasswordValidator checks that the password is not a common password
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
+        # NumericPasswordValidator checks that the password is not entirely numeric
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
@@ -109,46 +132,65 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
+# LANGUAGE_CODE is a string representing the language code for this installation
 LANGUAGE_CODE = 'en-us'
 
+# TIME_ZONE is a string representing the time zone for this installation
 TIME_ZONE = 'UTC'
 
+# USE_I18N is a boolean that specifies whether Django's translation system should be enabled
 USE_I18N = True
 
+# USE_TZ is a boolean that specifies whether Django should use timezone-aware datetimes
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+# STATIC_URL is the URL to use when referring to static files
 STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
+# DEFAULT_AUTO_FIELD is the default type for primary keys
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#New Setings
+# New Settings
+# LOGIN_REDIRECT_URL is the URL to redirect to after a successful login
 LOGIN_REDIRECT_URL = 'learning_logs:index'
+# LOGOUT_REDIRECT_URL is the URL to redirect to after a successful logout
 LOGOUT_REDIRECT_URL = 'learning_logs:index'
+# LOGIN_URL is the URL to redirect to for login
 LOGIN_URL = 'accounts:login'
 
-#Platform.sh settings
+# Platform.sh settings
+# Import the Config class from the platformshconfig module
 from platformshconfig import Config
 
+# Create an instance of the Config class
 config = Config()
 
+# Check if the current environment is a valid Platform.sh environment
 if config.is_valid_platform():
+    # Add the Platform.sh domain to ALLOWED_HOSTS
     ALLOWED_HOSTS.append('.platformsh.site')
+    # Disable DEBUG mode
     DEBUG = False
 
+    # If the app directory is available, set STATIC_ROOT to the static directory inside the app directory
     if config.appDir:
         STATIC_ROOT = Path(config.appDir) / 'static'
+    # If the project entropy is available, set SECRET_KEY to the project entropy
     if config.projectEntropy:
         SECRET_KEY = config.projectEntropy
    
+    # If not in the build phase, configure the database settings
     if not config.in_build():
+        # Get the database credentials from the Platform.sh environment
         db_settings = config.credentials('database')
+        # Set the DATABASES dictionary with the database credentials
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.postgresql',
